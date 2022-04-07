@@ -1,0 +1,15 @@
+version: '3.3'
+services:
+  consumer:
+    build: 
+      context: Sample.Consumer
+      dockerfile: Dockerfile
+    environment:
+      - AzureWebJobsStorage=UseDevelopmentStorage=true;DevelopmentStorageProxy=http://azurite;
+      - ServiceBusConnection=
+    depends_on:
+      - azure-storage
+  azure-storage:
+    image: mcr.microsoft.com/azure-storage/azurite
+    hostname: azurite
+    restart: always
